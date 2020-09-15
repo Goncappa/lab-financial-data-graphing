@@ -7,15 +7,18 @@ axios
 .get(apiUrl)
 .then(responseFromAPI => {
   console.log(responseFromAPI.data); 
+  printTheChart(responseFromAPI.data);
 })
 .catch(err => console.log('Error while getting the data:', err));
 
 
 function printTheChart(stockData) {
-    const dailyData = stockData['Time Series (Daily)'];
+    const dailyData = stockData.bpi;
    
     const stockDates = Object.keys(dailyData);
-    const stockPrices = stockDates.map(date => dailyData[date]['4. close']);
+    const stockPrices = stockDates.map(date => dailyData[date]);
+
+    console.log("stockPrices = ", stockPrices);
    
     const ctx = document.getElementById('my-chart').getContext('2d');
     const chart = new Chart(ctx, {
@@ -32,4 +35,4 @@ function printTheChart(stockData) {
         ]
       }
     }); // closes chart = new Chart()
-  }
+  } 
